@@ -1,8 +1,8 @@
 const App = {
   data() {
     return {
-      placeholderString: "Введите название заметки (макс. 75 символов)",
-      title: "Список заметок",
+      placeholderString: "Введите задачу (макс. 75 символов)",
+      title: "Список задач",
       inputValue: "",
       notes: [],
     };
@@ -10,7 +10,11 @@ const App = {
   methods: {
     addNewNote() {
       if (this.inputValue !== "") {
-        this.notes.push(this.inputValue);
+        this.notes.push({
+          id: Date.now(),
+          text: this.inputValue,
+          checked: false,
+        });
         this.inputValue = "";
       }
     },
@@ -26,11 +30,10 @@ const App = {
       return 10 - this.notes.length;
     },
   },
-  // watch следит за изменением переменных
   watch: {
-    inputValue(value) {
+    inputValue() {
       if (this.notes.length > 10) {
-        alert("Достигнут лимит количества заметок");
+        alert("Достигнут лимит количества задач");
         this.removeNote(10);
       }
     },
